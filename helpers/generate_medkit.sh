@@ -33,6 +33,8 @@ export OVERLAY=
 export SIGN_KEY=
 export OUTPUT=
 export BOOTSTRAP_TESTKEY=
+export REPO=
+export REPO_KEY=
 
 export TURRIS_BUILD_DIR="$src_dir"
 
@@ -93,6 +95,13 @@ while [ $# -gt 0 ]; do
 			echo "    some default settings for example."
 			echo "  --sign KEY"
 			echo "    Sign medkit with given KEY and usign utility"
+			echo "  --repo URL"
+			echo "    Use custom package repository. may be a local \"file://\"-url."
+			echo "    By default (if this options is not specified) \"repo.turris.cz\""
+			echo "    is used."
+			echo "  --repo-key KEY"
+			echo "    Base64 encoded public KEY to use for the custom package "
+			echo "    repository."
 			echo "  --help, -h"
 			echo "    Print this text and exit."
 			exit 0
@@ -139,6 +148,14 @@ while [ $# -gt 0 ]; do
 		--sign)
 			shift
 			SIGN_KEY="$1"
+			;;
+		--repo)
+			shift
+			REPO="$1"
+			;;
+		--repo-key)
+			shift
+			REPO_KEY="$1"
 			;;
 		*)
 			[ -z "$OUTPUT" ] || die "Unknown option: $1"

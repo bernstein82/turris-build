@@ -2,6 +2,9 @@
 Root script for updater-ng configuration used for medkit generation.
 ]]
 
+repo_base_uri = os.getenv('REPO') or "https://repo.turris.cz/" .. os.getenv('BRANCH')
+repo_key = os.getenv('REPO_KEY')
+
 -- Get target board
 model = os.getenv('BOARD')
 if not model or model == "" then
@@ -12,8 +15,8 @@ end
 -- by updater version <63
 Export('model')
 
-Script("https://repo.turris.cz/" .. os.getenv('BRANCH') .. '/' .. model .. '/lists/bootstrap.lua', {
-	pubkey = {
+Script(repo_base_uri .. '/' .. model .. '/lists/bootstrap.lua', {
+	pubkey = repo_key and { "data:base64," .. repo_key } or {
 		-- Turris release key
 		"data:base64,dW50cnVzdGVkIGNvbW1lbnQ6IFR1cnJpcyByZWxlYXNlIGtleSBnZW4gMQpSV1Rjc2c1VFhHTGRXOWdObEdITi9vZmRzTTBLQWZRSVJCbzVPVlpJWWxWVGZ5STZGR1ZFT0svZQo=",
 		-- Turris development key
